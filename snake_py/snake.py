@@ -5,8 +5,8 @@ class Fruit:
     def __init__(self, screen, color, size):
         self.color = color
         self.screen = screen
-        self.pos_x = randint(0,screen.get_width()/size+1)*size
-        self.pos_y = randint(0,screen.get_height()/size+1)*size
+        self.pos_x = randint(0,screen.get_width()/size)*size
+        self.pos_y = randint(0,screen.get_height()/size)*size
         self.size = size
         self.pixel = pygame.Rect(self.pos_x,self.pos_y,self.size,self.size)
     
@@ -14,8 +14,8 @@ class Fruit:
         pygame.draw.rect(self.screen,self.color, self.pixel)
 
     def new(self):
-        self.pos_y = randint(0,screen.get_height()/self.size+1)*self.size
-        self.pos_x = randint(0,screen.get_width()/self.size+1)*self.size
+        self.pos_y = randint(0,(screen.get_height()/self.size)-1)*self.size
+        self.pos_x = randint(0,(screen.get_width()/self.size)-1)*self.size
         self.pixel = pygame.Rect(self.pos_x,self.pos_y,self.size,self.size)
 
 class Snake:
@@ -38,9 +38,6 @@ class Snake:
         t_snake_body.move_ip(direction)
         self.snake.insert(0,t_snake_body)
         self.snake.pop()
-        # t_snake_body = self.snake[0].copy()
-        # t_snake_body.move_ip(direction)
-        # self.snake.append(t_snake_body)
     
     def move_add(self, direction):
         t_snake_body = self.snake[0].copy()
@@ -91,7 +88,11 @@ if __name__ == "__main__":
         if snake.snake[0].center == fruit.pixel.center:
             fruit.new()
             snake.move_add(direction)
-            speed += 5
+            speed += 3
+        elif (snake.snake[0].centerx < 0) or (snake.snake[0].centerx > screen.get_width()):
+            running = False
+        elif (snake.snake[0].centery < 0) or (snake.snake[0].centery > screen.get_height()):
+            running = False
         else:
             snake.move(direction)
         
