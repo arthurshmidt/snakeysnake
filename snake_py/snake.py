@@ -55,6 +55,10 @@ if __name__ == "__main__":
     snake = Snake(screen, "blue",pixel_size)
     running = True
     direction = (0,0)                               # Starting direction (0,0)
+    score = 10
+
+    # Enter Player Name 
+    player = input("Enter Player Name: ")
 
     # Main game loop
     while running:
@@ -89,6 +93,7 @@ if __name__ == "__main__":
             fruit.new()
             snake.move_add(direction)
             speed += 3
+            score += 10
         elif (snake.snake[0].centerx < 0) or (snake.snake[0].centerx > screen.get_width()):
             running = False
         elif (snake.snake[0].centery < 0) or (snake.snake[0].centery > screen.get_height()):
@@ -99,5 +104,8 @@ if __name__ == "__main__":
         pygame.display.flip()
 
         clock.tick(speed) / 1000
+
+    print(f"Score = {score}")
+
 
     pygame.quit()
